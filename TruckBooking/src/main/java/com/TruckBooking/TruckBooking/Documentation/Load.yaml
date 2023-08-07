@@ -1,0 +1,371 @@
+swagger: '2.0'
+info:
+  description: LoadAPI Documentation
+  version: '1.0'
+  title: LoadAPI Documentation
+  termsOfService: 'urn:tos'
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+host: 'localhost:8080'
+basePath: /
+tags:
+  - name: load-controller
+    description: Load Controller
+paths:
+  /home:
+    get:
+      tags:
+        - load-controller
+      summary: getmessage
+      operationId: getmessageUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /load:
+    get:
+      tags:
+        - load-controller
+      summary: findLoads
+      operationId: findLoadsUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: loadingPointCity
+          in: query
+          description: loadingPointCity
+          required: false
+          type: string
+        - name: pageNo
+          in: query
+          description: pageNo
+          required: false
+          type: integer
+          format: int32
+        - name: postLoadId
+          in: query
+          description: postLoadId
+          required: false
+          type: string
+        - name: suggestedLoads
+          in: query
+          description: suggestedLoads
+          required: false
+          type: boolean
+        - name: truckType
+          in: query
+          description: truckType
+          required: false
+          type: string
+        - name: unloadingPointCity
+          in: query
+          description: unloadingPointCity
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Load'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - load-controller
+      summary: load
+      operationId: loadUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: loadrequest
+          description: loadrequest
+          required: true
+          schema:
+            $ref: '#/definitions/LoadRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CreateLoadResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/load/{loadId}':
+    get:
+      tags:
+        - load-controller
+      summary: findLoad
+      operationId: findLoadUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: loadId
+          in: path
+          description: loadId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Load'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    put:
+      tags:
+        - load-controller
+      summary: updateLoad
+      operationId: updateLoadUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: loadId
+          in: path
+          description: loadId
+          required: true
+          type: string
+        - in: body
+          name: loadrequest
+          description: loadrequest
+          required: true
+          schema:
+            $ref: '#/definitions/LoadRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UpdateLoadResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    delete:
+      tags:
+        - load-controller
+      summary: deleteLoad
+      operationId: deleteLoadUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: loadId
+          in: path
+          description: loadId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeleteLoadResponse'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+definitions:
+  CreateLoadResponse:
+    type: object
+    properties:
+      comment:
+        type: string
+      loadId:
+        type: string
+      loadingPoint:
+        type: string
+      loadingPointCity:
+        type: string
+      loadingPointState:
+        type: string
+      noOfTrucks:
+        type: string
+      postLoadId:
+        type: string
+      productType:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      status:
+        type: string
+      truckType:
+        type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+      unloadingPoint:
+        type: string
+      unloadingPointCity:
+        type: string
+      unloadingPointState:
+        type: string
+      weight:
+        type: string
+    title: CreateLoadResponse
+  DeleteLoadResponse:
+    type: object
+    properties:
+      status:
+        type: string
+    title: DeleteLoadResponse
+  Load:
+    type: object
+    properties:
+      comment:
+        type: string
+      loadId:
+        type: string
+      loadingPoint:
+        type: string
+      loadingPointCity:
+        type: string
+      loadingPointState:
+        type: string
+      noOfTrucks:
+        type: string
+      postLoadId:
+        type: string
+      productType:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      status:
+        type: string
+      truckType:
+        type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+      unloadingPoint:
+        type: string
+      unloadingPointCity:
+        type: string
+      unloadingPointState:
+        type: string
+      weight:
+        type: string
+    title: Load
+  LoadRequest:
+    type: object
+    properties:
+      comment:
+        type: string
+      loadingPoint:
+        type: string
+      loadingPointCity:
+        type: string
+      loadingPointState:
+        type: string
+      noOfTrucks:
+        type: string
+      postLoadId:
+        type: string
+      productType:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      status:
+        type: string
+      truckType:
+        type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+      unloadingPoint:
+        type: string
+      unloadingPointCity:
+        type: string
+      unloadingPointState:
+        type: string
+      weight:
+        type: string
+    title: LoadRequest
+  UpdateLoadResponse:
+    type: object
+    properties:
+      comment:
+        type: string
+      loadId:
+        type: string
+      loadingPoint:
+        type: string
+      loadingPointCity:
+        type: string
+      loadingPointState:
+        type: string
+      noOfTrucks:
+        type: string
+      postLoadId:
+        type: string
+      productType:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      status:
+        type: string
+      truckType:
+        type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+      unloadingPoint:
+        type: string
+      unloadingPointCity:
+        type: string
+      unloadingPointState:
+        type: string
+      weight:
+        type: string
+    title: UpdateLoadResponse

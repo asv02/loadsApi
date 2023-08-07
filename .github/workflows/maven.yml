@@ -1,0 +1,35 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ dev ]
+
+defaults:
+  run:
+    working-directory: ./TruckBooking
+    
+jobs:
+  build:
+    runs-on: ['self-hosted','loadDev']
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+        cache: maven
+        
+    - run: sudo docker container stop loadContainer || true    
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+    - run: cd ~/actions-runner/deploy/loadsApi/loadsApi/TruckBooking
+    - run: sudo docker container rm loadContainer || true
+    - run: sudo docker image rm load || true
+    - run: sudo docker build -t load .
+    - run: sudo docker run -d --env-file /home/ubuntu/envDev.properties -p 8080:8080 --name loadContainer load  sleep infinity| echo "success"
+

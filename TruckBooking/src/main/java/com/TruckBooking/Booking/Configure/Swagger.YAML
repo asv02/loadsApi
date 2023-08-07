@@ -1,0 +1,555 @@
+swagger: '2.0'
+info:
+  description: Api Documentation
+  version: '1.0'
+  title: Api Documentation
+  termsOfService: 'urn:tos'
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+host: 'localhost:8090'
+basePath: /
+tags:
+  - name: basic-error-controller
+    description: Basic Error Controller
+  - name: booking-controller
+    description: Booking Controller
+paths:
+  /booking:
+    get:
+      tags:
+        - booking-controller
+      summary: getData
+      operationId: getDataUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: cancel
+          in: query
+          description: cancel
+          required: false
+          type: boolean
+        - name: completed
+          in: query
+          description: completed
+          required: false
+          type: boolean
+        - name: pageNo
+          in: query
+          description: pageNo
+          required: false
+          type: integer
+          format: int32
+        - name: postLoadId
+          in: query
+          description: postLoadId
+          required: false
+          type: string
+        - name: transporterId
+          in: query
+          description: transporterId
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BookingData'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    post:
+      tags:
+        - booking-controller
+      summary: addBooking
+      operationId: addBookingUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/BookingPostRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BookingPostResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/booking/{bookingId}':
+    get:
+      tags:
+        - booking-controller
+      summary: getDataById
+      operationId: getDataByIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: bookingId
+          in: path
+          description: bookingId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BookingData'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - booking-controller
+      summary: updateBooking
+      operationId: updateBookingUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: bookingId
+          in: path
+          description: bookingId
+          required: true
+          type: string
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/BookingPutRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BookingPutResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - booking-controller
+      summary: deleteBooking
+      operationId: deleteBookingUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: bookingId
+          in: path
+          description: bookingId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /error:
+    get:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingGET
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    head:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingHEAD
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingDELETE
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    options:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingOPTIONS
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPATCH
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+definitions:
+  BookingData:
+    type: object
+    properties:
+      bookingDate:
+        type: string
+      bookingId:
+        type: string
+      cancel:
+        type: boolean
+      completed:
+        type: boolean
+      completedDate:
+        type: string
+      loadId:
+        type: string
+      postLoadId:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      transporterId:
+        type: string
+      truckId:
+        type: array
+        items:
+          type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+    title: BookingData
+  BookingPostRequest:
+    type: object
+    properties:
+      bookingDate:
+        type: string
+      loadId:
+        type: string
+      postLoadId:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      transporterId:
+        type: string
+      truckId:
+        type: array
+        items:
+          type: string
+      unitValue:
+        type: string
+    title: BookingPostRequest
+  BookingPostResponse:
+    type: object
+    properties:
+      bookingDate:
+        type: string
+      bookingId:
+        type: string
+      cancel:
+        type: boolean
+      completed:
+        type: boolean
+      completedDate:
+        type: string
+      loadId:
+        type: string
+      postLoadId:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      status:
+        type: string
+      transporterId:
+        type: string
+      truckId:
+        type: array
+        items:
+          type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+    title: BookingPostResponse
+  BookingPutRequest:
+    type: object
+    properties:
+      bookingDate:
+        type: string
+      cancel:
+        type: boolean
+      completed:
+        type: boolean
+      completedDate:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      truckId:
+        type: array
+        items:
+          type: string
+      unitValue:
+        type: string
+    title: BookingPutRequest
+  BookingPutResponse:
+    type: object
+    properties:
+      bookingDate:
+        type: string
+      bookingId:
+        type: string
+      cancel:
+        type: boolean
+      completed:
+        type: boolean
+      completedDate:
+        type: string
+      loadId:
+        type: string
+      postLoadId:
+        type: string
+      rate:
+        type: integer
+        format: int64
+      status:
+        type: string
+      transporterId:
+        type: string
+      truckId:
+        type: array
+        items:
+          type: string
+      unitValue:
+        type: string
+        enum:
+          - PER_TON
+          - PER_TRUCK
+    title: BookingPutResponse
+  ModelAndView:
+    type: object
+    properties:
+      empty:
+        type: boolean
+      model:
+        type: object
+      modelMap:
+        type: object
+        additionalProperties:
+          type: object
+      reference:
+        type: boolean
+      status:
+        type: string
+        enum:
+          - ACCEPTED
+          - ALREADY_REPORTED
+          - BAD_GATEWAY
+          - BAD_REQUEST
+          - BANDWIDTH_LIMIT_EXCEEDED
+          - CHECKPOINT
+          - CONFLICT
+          - CONTINUE
+          - CREATED
+          - DESTINATION_LOCKED
+          - EXPECTATION_FAILED
+          - FAILED_DEPENDENCY
+          - FORBIDDEN
+          - FOUND
+          - GATEWAY_TIMEOUT
+          - GONE
+          - HTTP_VERSION_NOT_SUPPORTED
+          - IM_USED
+          - INSUFFICIENT_SPACE_ON_RESOURCE
+          - INSUFFICIENT_STORAGE
+          - INTERNAL_SERVER_ERROR
+          - I_AM_A_TEAPOT
+          - LENGTH_REQUIRED
+          - LOCKED
+          - LOOP_DETECTED
+          - METHOD_FAILURE
+          - METHOD_NOT_ALLOWED
+          - MOVED_PERMANENTLY
+          - MOVED_TEMPORARILY
+          - MULTIPLE_CHOICES
+          - MULTI_STATUS
+          - NETWORK_AUTHENTICATION_REQUIRED
+          - NON_AUTHORITATIVE_INFORMATION
+          - NOT_ACCEPTABLE
+          - NOT_EXTENDED
+          - NOT_FOUND
+          - NOT_IMPLEMENTED
+          - NOT_MODIFIED
+          - NO_CONTENT
+          - OK
+          - PARTIAL_CONTENT
+          - PAYLOAD_TOO_LARGE
+          - PAYMENT_REQUIRED
+          - PERMANENT_REDIRECT
+          - PRECONDITION_FAILED
+          - PRECONDITION_REQUIRED
+          - PROCESSING
+          - PROXY_AUTHENTICATION_REQUIRED
+          - REQUESTED_RANGE_NOT_SATISFIABLE
+          - REQUEST_ENTITY_TOO_LARGE
+          - REQUEST_HEADER_FIELDS_TOO_LARGE
+          - REQUEST_TIMEOUT
+          - REQUEST_URI_TOO_LONG
+          - RESET_CONTENT
+          - SEE_OTHER
+          - SERVICE_UNAVAILABLE
+          - SWITCHING_PROTOCOLS
+          - TEMPORARY_REDIRECT
+          - TOO_EARLY
+          - TOO_MANY_REQUESTS
+          - UNAUTHORIZED
+          - UNAVAILABLE_FOR_LEGAL_REASONS
+          - UNPROCESSABLE_ENTITY
+          - UNSUPPORTED_MEDIA_TYPE
+          - UPGRADE_REQUIRED
+          - URI_TOO_LONG
+          - USE_PROXY
+          - VARIANT_ALSO_NEGOTIATES
+      view:
+        $ref: '#/definitions/View'
+      viewName:
+        type: string
+    title: ModelAndView
+  View:
+    type: object
+    properties:
+      contentType:
+        type: string
+    title: View
