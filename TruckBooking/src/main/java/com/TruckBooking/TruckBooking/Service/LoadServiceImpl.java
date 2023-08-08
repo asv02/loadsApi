@@ -605,7 +605,7 @@ public class LoadServiceImpl implements LoadService {
 	//Helps to send emails.
     public static  void sendSimpleEmail(JavaMailSender mailSender,String toEmail, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("rocktheway.2akash@gmail.com");
+        message.setFrom("your_mail@gmail.com");
         message.setTo(toEmail);
         message.setText(body);
         message.setSubject(subject);
